@@ -1,4 +1,10 @@
 package ass1;
+/*
+ *  @Author: Caleb & Samuel
+ * 
+ * 
+ * 
+ */
 
 import java.net.*;
 import java.io.*;
@@ -7,7 +13,8 @@ import java.io.*;
 public class Server1 {
 	
 	DatagramPacket sendPacket, receivePacket;
-	DatagramSocket sendSocket, receiveSocket;
+	static DatagramSocket sendSocket;
+	static DatagramSocket receiveSocket;
 	
 	public Server1()
 	{
@@ -15,8 +22,8 @@ public class Server1 {
 	         // Construct a datagram socket and bind it to any available 
 	         // port on the local server machine. This socket will be used to
 	         // send UDP Datagram packets.
-	         receiveSocket = new DatagramSocket(5000);
-	         sendSocket = new DatagramSocket(5002);
+	         receiveSocket = new DatagramSocket(69);
+	         sendSocket = new DatagramSocket(67);
 	         // to test socket timeout (2 seconds)
 	         //receiveSocket.setSoTimeout(2000);
 	      } catch (SocketException se) {
@@ -44,8 +51,8 @@ public class Server1 {
 				
 				
 				System.out.println("new Values "+ str);
-				
-				byte[] senddata = str.getBytes();
+				byte[] senddata = new byte[1024];
+				senddata = str.getBytes();
 				InetAddress ia = null;
 				try {
 					ia = InetAddress.getLocalHost();
@@ -65,6 +72,7 @@ public class Server1 {
 			      System.out.println("Length: " + len);
 			      System.out.print("Containing: ");
 			      System.out.println(new String(sendPacket.getData(),0,len));
+			      System.out.println("");
 				try {
 					sendSocket.send(sendPacket);
 				} catch (IOException e) {
@@ -83,7 +91,8 @@ public class Server1 {
 	{
 		Server1 s = new Server1();
 		s.receiveAndEcho();
-		
+		sendSocket.close();
+		receiveSocket.close();
 	}
 
 }
