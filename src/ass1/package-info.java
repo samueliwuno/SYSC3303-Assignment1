@@ -2,7 +2,7 @@
  * 
  */
 /**
- * @author samuel
+ * @author samuel & Caleb
  *
  */
 package ass1;
