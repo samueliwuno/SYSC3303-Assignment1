@@ -3,17 +3,24 @@
  */
 package ass1;
 
+/**
+ * 
+ */
+
+
 import java.net.*;
+import java.text.DecimalFormat;
 import java.io.*;
 import java.util.Random;
 /**
- * @author samuel
+ * @author samuel & Caleb
  *
  */
 public class Client {
-	DatagramSocket sendReceiveSocket;
+	static DatagramSocket sendReceiveSocket;
 	DatagramPacket sendPacket,receivePacket;
-
+	static long initialTime,finalTime;
+	static double timeTotal;
 	
 	public Client() {
 		
@@ -45,8 +52,8 @@ public class Client {
 	System.out.println("Complete!! Here is the result: "+randomString+"\n");
 	
 	
-	
-	byte [] data = randomString.getBytes();
+	 byte[] data = new byte[512];
+	data = randomString.getBytes();
 	
 	sendPacket = new DatagramPacket(data,data.length,InetAddress.getLocalHost(),5100);
 	
@@ -62,6 +69,7 @@ public class Client {
     
     
 	try {
+		initialTime = System.currentTimeMillis();
 		sendReceiveSocket.send(sendPacket);
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
@@ -82,11 +90,11 @@ public class Client {
      System.out.println("Host port: " + receivePacket.getPort());
      len = receivePacket.getLength();
      System.out.println("Length: " + len);
-     System.out.print("Containing: ");
+     System.out.println("Containing: ");
 	 String str = new String (receivePacket.getData());
 
 	System.out.println("Data with Vowels Removed " + str);
-//	sendReceiveSocket.close();
+	finalTime = System.currentTimeMillis();
 		}
 	
 	
@@ -96,7 +104,13 @@ public class Client {
 	public static void main(String args[]) throws Exception
 	   {
 			Client c = new Client();
-			c.sendAndReceive();  
+			for(int i=0;i<100;i++){
+				c.sendAndReceive();
+				
+			}
+			timeTotal = (finalTime-initialTime);
+			System.out.println("The total time is: " + timeTotal + " Seconds\n");
+			sendReceiveSocket.close();
 	   }
 	
 	
