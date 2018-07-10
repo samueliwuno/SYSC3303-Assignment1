@@ -7,8 +7,8 @@ Process
 - Run Client
 
 Ports used 
- - Server1: 5000(receive) and 5002(send)
- - Server2: 5001(receive) and 5003(send)
+ - Server1: 66(receive) and 68(send)
+ - Server2: 67(receive) and 69(send)
  - Proxy: 5100(receive) any(send)
  - Client: any(receive/send)
 
