@@ -1,5 +1,6 @@
 # SYSC3303-Assignment1
-build a very basic three-part system consisting of a client, a proxy, and two servers.
+build a very basic three-part system consisting of a client, a proxy, and two servers.The client’s role is to sequentially send one hundred randomly generated strings of size twenty characters each to some server, which then eliminates the vowels from
+the strings and eventually sends them back to the client to print on the screen.
 
 Process
 - Run Server 1 and 2
