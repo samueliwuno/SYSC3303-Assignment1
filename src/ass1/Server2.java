@@ -1,5 +1,10 @@
 package ass1;
-
+/*
+ *  @Author: Samuel & Caleb
+ * 
+ * 
+ * 
+ */
 import java.net.*;
 import java.io.*;
 
@@ -8,7 +13,8 @@ import java.io.*;
 public class Server2 {
 	
 	DatagramPacket sendPacket, receivePacket;
-	DatagramSocket sendSocket, receiveSocket;
+	static DatagramSocket sendSocket;
+	static DatagramSocket receiveSocket;
 	
 	public Server2()
 	{
@@ -16,8 +22,8 @@ public class Server2 {
 	         // Construct a datagram socket and bind it to any available 
 	         // port on the local server machine. This socket will be used to
 	         // send UDP Datagram packets.
-	         receiveSocket = new DatagramSocket(5001);
-	         sendSocket = new DatagramSocket(5003);
+	         receiveSocket = new DatagramSocket(68);
+	         sendSocket = new DatagramSocket(66);
 	         // to test socket timeout (2 seconds)
 	         //receiveSocket.setSoTimeout(2000);
 	      } catch (SocketException se) {
@@ -46,7 +52,8 @@ public class Server2 {
 				
 				System.out.println("new Values "+ str);
 				
-				byte[] senddata = str.getBytes();
+				byte[] senddata = new byte[1024];
+				senddata = str.getBytes();
 				InetAddress ia = null;
 				try {
 					ia = InetAddress.getLocalHost();
@@ -66,6 +73,7 @@ public class Server2 {
 			      System.out.println("Length: " + len);
 			      System.out.print("Containing: ");
 			      System.out.println(new String(sendPacket.getData(),0,len));
+			      System.out.println("");
 				try {
 					sendSocket.send(sendPacket);
 				} catch (IOException e) {
@@ -74,8 +82,8 @@ public class Server2 {
 					System.exit(1);
 				}
 				System.out.println("Process Complete");
-				sendSocket.close();
-				receiveSocket.close();
+				//sendSocket.close();
+				//receiveSocket.close();
 				}
 				
 		
@@ -85,8 +93,9 @@ public class Server2 {
 	{
 		Server2 s = new Server2();
 		s.receiveAndEcho();
+		sendSocket.close();
+		receiveSocket.close();
 		
 	}
 
 }
-
