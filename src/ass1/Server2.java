@@ -1,6 +1,5 @@
-package ass1;
 /*
- *  @Author: Samuel & Caleb
+ *  @Author: Caleb & Samuel
  * 
  * 
  * 
@@ -34,10 +33,11 @@ public class Server2 {
 	
 	public void receiveAndEcho () {
 				while(true) {
-		      
+				//while loop enables server to always receive, process and send the packet until there is no packet left
 				byte[] data = new byte[1024];
 				DatagramPacket receivePacket, sendPacket;
 				receivePacket = new DatagramPacket(data,data.length);
+				System.out.println("Server2: Waiting for Packet.\n");
 				try {
 					receiveSocket.receive(receivePacket);
 				} catch (IOException e) {
@@ -45,12 +45,12 @@ public class Server2 {
 					e.printStackTrace();
 					System.exit(1);
 				}
-				
+				// removes all the vowels in the data received
 				String str = new String (receivePacket.getData());
+				System.out.println("Server2: Received -  "+ str);
 				str = str.replaceAll("[AEIOUaeiou]", "");
-				
-				
-				System.out.println("new Values "+ str);
+				System.out.println("Server2: Performing Operation........done");
+				System.out.println("Server2: Result - "+ str);
 				
 				byte[] senddata = new byte[1024];
 				senddata = str.getBytes();
@@ -82,8 +82,8 @@ public class Server2 {
 					System.exit(1);
 				}
 				System.out.println("Process Complete");
-				//sendSocket.close();
-				//receiveSocket.close();
+				System.out.println("");
+				
 				}
 				
 		

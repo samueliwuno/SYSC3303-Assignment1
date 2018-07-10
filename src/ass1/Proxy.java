@@ -1,5 +1,3 @@
-package ass1;
-
 /*
  *  @Author: Caleb & Samuel
  * 
@@ -64,19 +62,16 @@ public class Proxy {
     System.out.println(received );
     
    
-  /*  InetAddress ia = null;
-	try {
-		ia = InetAddress.getLocalHost();
-	} catch (UnknownHostException e) {
-		System.out.println("cannot resolve address\n");
-		e.printStackTrace();
-	}
-	*/
-	//prepare packet to either send to server or client
-	if(receivePacket.getLength() <= 520)
+ 
+	
+    /* client packets are no more that 512 bytes, and server packets are no more than 1024
+     * if statement below is used to differentiate whether a packet is coming from the server or client
+     */
+  //prepare packet to either send to server or client
+	if(receivePacket.getLength() <= 520)  
 	{
 		int serverPort;
-		boolean TFport;
+		boolean TFport;			// boolean to decide on which server to  send the packet
 		Random rand = new Random();
 		TFport = rand.nextBoolean();
 		if(TFport==true){
@@ -97,7 +92,7 @@ public class Proxy {
 		
 	}
 	
-	
+	//giving details of Packets being sent
 	System.out.println("at address: "+sendPacket.getAddress());
 	System.out.println("and port: "+sendPacket.getPort());
 	len = sendPacket.getLength();
@@ -113,10 +108,8 @@ public class Proxy {
 	}
 	
 	
-	//outputs to confirm where packet is going
-	
     System.out.println("Proxy: Process Complete");
-
+   
 	}
 	
 	
