@@ -11,4 +11,8 @@ Ports used
  - Server2: 67(receive) and 69(send)
  - Proxy: 5100(receive) any(send)
  - Client: any(receive/send)
+ 
+ Work done by
+ - Samuel Iwuno(100960021)
+ - Caleb Gryfe(101009798)
 
