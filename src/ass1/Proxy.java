@@ -1,12 +1,20 @@
 package ass1;
 
+/*
+ *  @Author: Caleb & Samuel
+ * 
+ * 
+ * 
+ */
+
 import java.net.*;
 import java.io.*;
-
+import java.util.*;
 
 public class Proxy {
 	
-	DatagramSocket sendReceiveSocket, receiveSocket;
+	static DatagramSocket sendReceiveSocket;
+	static DatagramSocket receiveSocket;
 	DatagramPacket receivePacket, sendPacket;
 
 	public Proxy()
@@ -31,7 +39,7 @@ public class Proxy {
 	{
 		int clientport = 0;
 	while(true) {
-	byte[] data = new byte[1024];
+	byte[] data = new byte[2048]; 
 	
 	receivePacket = new DatagramPacket(data,data.length);
 	System.out.println("Proxy: Waiting for Packet.\n");
@@ -65,13 +73,24 @@ public class Proxy {
 	}
 	*/
 	//prepare packet to either send to server or client
-	if(receivePacket.getPort() != 5002)
+	if(receivePacket.getLength() <= 520)
 	{
-		sendPacket = new DatagramPacket(data,receivePacket.getLength(),receivePacket.getAddress(),5000);
+		int serverPort;
+		boolean TFport;
+		Random rand = new Random();
+		TFport = rand.nextBoolean();
+		if(TFport==true){
+			serverPort = 68;
+			System.out.println("Proxy: relaying Packet to Server 2");
+		}else{
+			serverPort = 69;
+			System.out.println("Proxy: relaying Packet to Server 1");
+		}
+		sendPacket = new DatagramPacket(data,receivePacket.getLength(),receivePacket.getAddress(),serverPort);
 		clientport = receivePacket.getPort();
-		System.out.println("Proxy: relaying Packet to Server");
 		
-	}
+		
+	} 
 	else {
 		sendPacket = new DatagramPacket(data,receivePacket.getLength(),receivePacket.getAddress(),clientport);
 		System.out.println("Proxy: relaying Packet to Client");
@@ -97,8 +116,7 @@ public class Proxy {
 	//outputs to confirm where packet is going
 	
     System.out.println("Proxy: Process Complete");
-   // receiveSocket.close();
-//	sendReceiveSocket.close();
+
 	}
 	
 	
@@ -108,7 +126,8 @@ public class Proxy {
 	   {
 			Proxy p = new Proxy();
 			p.RelayPacket();
-			  
+			receiveSocket.close();
+			sendReceiveSocket.close();
 	   }
 	
 }
